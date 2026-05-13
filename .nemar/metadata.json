@@ -1,0 +1,24 @@
+{
+  "version": "2.0",
+  "dataset_id": "on002778",
+  "source": "openneuro",
+  "source_id": "ds002778",
+  "title": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
+  "authors": {
+    "Alexander P. Rockhill": {},
+    "Nicko Jackson": {},
+    "Jobi George": {},
+    "Adam Aron": {},
+    "Nicole C. Swann": {}
+  },
+  "license": "CC0",
+  "dataset_type": "raw",
+  "related_identifiers": [
+    {
+      "identifier": "10.18112/openneuro.ds002778.v1.0.5",
+      "identifier_type": "DOI",
+      "relation_type": "IsIdenticalTo"
+    }
+  ],
+  "pipeline_stage": "seeded"
+}
