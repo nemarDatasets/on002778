@@ -22,3 +22,35 @@ Pernet, C. R., Appelhoff, S., Gorgolewski, K. J., Flandin, G.,
 Phillips, C., Delorme, A., Oostenveld, R. (2019). EEG-BIDS, an extension to the brain imaging data structure for electroencephalography. Scientific Data, 6, 103. https://doi.org/10.1038/s41597-019-0104-8.
 
 Note: see this discussion on the structure of the json files that is sufficient but not optimal and will hopefully be changed in future versions of BIDS: https://neurostars.org/t/behavior-metadata-without-tsv-event-data-related-to-a-neuroimaging-data/6768/25.
+
+## NEMAR curation changes (2026-05-21)
+
+BIDS validator: 4 errors + 1290 warnings → 0 errors + 967 warnings. Raw `.bdf` binary payloads unchanged.
+
+### `participants.tsv`
+- `gender` column: `f`/`m` → `F`/`M` for all 31 rows. Why: the paired `participants.json` declares `gender` with `Levels: {"F": "female", "M": "male"}` (uppercase enum), so the lowercase TSV cells did not match and were flagged as the wrong type.
+- `hand` column: `r` → `R` for all 31 rows. Why: same reason — `participants.json` declares `hand.Levels` as uppercase `{"R","L","A"}`.
+- No other column values changed.
+
+### `participants.json`
+- `MMSE` entry: removed the invalid `Levels` block. Why: the previous Levels keys were bin descriptors (`">24"`, `"19 - 23"`, `"10 - 18"`, `"<9"`), not literal cell values, so the validator interpreted them as an enum and rejected the actual integer cells (e.g. `30`) as not matching. Rewrote the entry as a numeric `Units: "points"` column and moved the bin information into the `Description` text. Closes the `MMSE` `TSV_VALUE_INCORRECT_TYPE` error.
+
+### `dataset_description.json`
+- Added `DatasetType: "raw"`. Why: BIDS-validator otherwise infers a derivative-rules cascade when `DatasetType` is missing alongside `GeneratedBy`, producing spurious warnings.
+- Added `GeneratedBy: [{Name: "nemar-cli", Version: "0.8.8", CodeURL: "https://github.com/nemar-org/nemar-cli"}]`. Why: records the NEMAR rehost step in the dataset's provenance chain.
+- Bumped `BIDSVersion` `1.2.2` → `1.8.0`. Why: the previous value was below the validator's recognized-version floor.
+
+### `task-rest_eeg.json` (new, inheriting root sidecar)
+- Created at the dataset root with one key: `TaskDescription`, a one-sentence paraphrase of this README (resting-state EEG; healthy controls a single session, Parkinson's patients two sessions, one on and one off dopaminergic medication). Why: closes the 46 `SIDECAR_KEY_RECOMMENDED:TaskDescription` warnings on the `_eeg.bdf` recordings via BIDS inheritance, in one place.
+
+### `task-rest_beh.json`
+- Added `TaskName: "rest"` and `TaskDescription` (resting state, no behavioral responses; the `_beh.tsv` files are placeholders kept only for BIDS-spec compatibility — this was already noted in the existing `trial` column description). Why: closes 92 `TaskName` and 46 `TaskDescription` warnings on the behavioral side via inheritance. The original `trial` column documentation is preserved unchanged.
+
+### `task-rest_events.json` (new, inheriting root sidecar)
+- Created at the dataset root, documenting four columns of every `_events.tsv`: `onset` (with `Units: "s"`), `duration` (with `Units: "s"`), `sample`, and `value`. Why: the per-recording `_events.tsv` files have `sample` and `value` columns that were not declared in any sidecar, which the validator flags as `TSV_ADDITIONAL_COLUMNS_UNDEFINED`. The `value` column carries the BioSemi `Status`-channel trigger code. One root sidecar closes 92 warnings via inheritance.
+
+### `sub-*/ses-*/eeg/sub-*_ses-*_task-rest_eeg.json` (46 per-recording sidecars)
+- Renamed the key `MiscChannelCount` → `MISCChannelCount`. Why: the previous spelling is not BIDS-canonical (BIDS requires all-uppercase `MISC`), so the validator did not recognise the field and continued to warn that `MISCChannelCount` was missing. No value change — the field stays at `0`. Closes the 46 `SIDECAR_KEY_RECOMMENDED:MISCChannelCount` warnings.
+
+### `sub-*/ses-*/sub-*_ses-*_scans.tsv` (46 per-recording scan tables)
+- `acq_time` cells: appended `.000000` microsecond suffix to every value (e.g. `2011-01-19T11:22:56` → `2011-01-19T11:22:56.000000`), plus a trailing newline. Why: `mne-bids`'s downstream `strptime('%Y-%m-%dT%H:%M:%S.%f')` requires fractional-second precision; without the suffix, downstream loaders have to repair the column on every read. Baking the suffix in removes that load-time mutation. No effect on the validator's findings — this purely cleans the load path. Original timestamp values otherwise unchanged.

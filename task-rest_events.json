@@ -1,0 +1,16 @@
+{
+    "onset": {
+        "Description": "Onset of the event measured from the beginning of the recording.",
+        "Units": "s"
+    },
+    "duration": {
+        "Description": "Duration of the event.",
+        "Units": "s"
+    },
+    "sample": {
+        "Description": "Onset of the event measured in samples (relative to the start of the recording)."
+    },
+    "value": {
+        "Description": "Trigger code recorded on the BioSemi Status channel for the event."
+    }
+}
