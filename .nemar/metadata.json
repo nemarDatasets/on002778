@@ -1,24 +1,94 @@
 {
   "version": "2.0",
-  "dataset_id": "on002778",
-  "source": "openneuro",
-  "source_id": "ds002778",
+  "pipeline_stage": "validated",
   "title": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
+  "license": "CC0",
+  "dataset_type": "raw",
   "authors": {
     "Alexander P. Rockhill": {},
     "Nicko Jackson": {},
     "Jobi George": {},
     "Adam Aron": {},
-    "Nicole C. Swann": {}
+    "Nicole C. Swann": {
+      "orcid": "0000-0003-2463-5134"
+    }
   },
-  "license": "CC0",
-  "dataset_type": "raw",
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds002778.v1.0.5",
       "identifier_type": "DOI",
-      "relation_type": "IsIdenticalTo"
+      "relation_type": "IsDerivedFrom"
+    },
+    {
+      "identifier": "https://github.com/nemarDatasets/on002778",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on002778",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.1523/ENEURO.0151-19.2019",
+      "identifier_type": "DOI",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.1002/ana.24507",
+      "identifier_type": "DOI",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.1016/j.nicl.2013.07.013",
+      "identifier_type": "DOI",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "10.1038/s41597-019-0104-8",
+      "identifier_type": "DOI",
+      "relation_type": "IsDescribedBy"
     }
   ],
-  "pipeline_stage": "seeded"
+  "modalities": [
+    "beh",
+    "eeg"
+  ],
+  "resource_type_specific": "Neuroimaging Dataset",
+  "sizes": [
+    "571.3 MB (47 files)"
+  ],
+  "formats": [
+    ".bdf",
+    ".gitattributes",
+    ".json",
+    ".md",
+    ".tsv",
+    ".yml"
+  ],
+  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The data were acquired to investigate neurophysiological markers of Parkinson's disease, including alterations in cortical oscillatory activity and synchronization patterns. This resource supports research into the electrophysiological characteristics of Parkinson's disease and dopaminergic effects on cortical dynamics.",
+  "methods_description": "Resting-state EEG data were collected from Parkinson's disease patients and healthy controls. Clinical assessments included UPDRS rating scales administered by laboratory personnel trained through online certification programs. Data were organized according to the Brain Imaging Data Structure (BIDS) standard for electroencephalography.",
+  "keywords": [
+    {
+      "term": "Parkinson's disease"
+    },
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "resting-state"
+    },
+    {
+      "term": "cortical oscillations"
+    },
+    {
+      "term": "beta band activity"
+    },
+    {
+      "term": "Electroencephalography",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D004569"
+    }
+  ],
+  "source_hash": "cbdd704ff495c54126aad1738e5fcc63064f5e1544e1221059e9cb9b814e4762"
 }
