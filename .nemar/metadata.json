@@ -2,8 +2,8 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
-  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The study includes 31 participants with EEG data acquired using BioSemi systems, with Parkinson's patients recorded in both on- and off-medication states. The dataset supports investigation of neurophysiological markers and cortical dynamics associated with Parkinson's disease and dopaminergic therapy effects.",
-  "methods_description": "Resting-state EEG recordings were acquired using BioSemi systems. Parkinson's disease patients were recorded in two sessions: one on dopaminergic medication and one off medication. Healthy control participants completed a single session. Clinical assessments included UPDRS rating scales administered by trained laboratory personnel.",
+  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The study includes 31 participants with recordings acquired both on and off dopaminergic medication for patient groups, enabling investigation of medication effects on cortical oscillatory activity. The dataset supports research into the neurophysiological signatures of Parkinson's disease, including alterations in beta-band synchronization and cortical dynamics.",
+  "methods_description": "Resting-state EEG recordings were collected using BioSemi acquisition systems. Healthy control participants completed a single session, while Parkinson's disease patients underwent two sessions: one on dopaminergic medication and one off medication. UPDRS rating scales were administered by laboratory personnel trained through online certification rather than board-certified neurologists.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
@@ -23,19 +23,21 @@
       "term": "Parkinson's disease"
     },
     {
-      "term": "resting state"
+      "term": "resting-state"
     },
     {
-      "term": "cortical oscillations"
+      "term": "beta oscillations"
+    },
+    {
+      "term": "cortical synchronization"
     },
     {
       "term": "dopaminergic medication"
     },
     {
-      "term": "beta band activity"
-    },
-    {
-      "term": "electroencephalography"
+      "term": "Electrophysiology",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D004594"
     }
   ],
   "related_identifiers": [
