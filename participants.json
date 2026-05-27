@@ -22,25 +22,20 @@
         }
     },
     "MMSE": {
-	"Description": "Mini-Mental State Examination score",
-	"Levels": {
-	    ">24": "normal cognition",
-	    "19 - 23": "mild cognitive impairment",
-	    "10 - 18": "moderate cognitive impairment",
-	    "<9": "severe cognitive impairment"
-	}
+        "Description": "Mini-Mental State Examination total score (0-30). Interpretation bins: >24 normal cognition; 19-23 mild cognitive impairment; 10-18 moderate cognitive impairment; <9 severe cognitive impairment.",
+        "Units": "points"
     },
     "NAART": {
-	"Description": "North American Adult Reading Test score, scored similar to an IQ test on a 100-point-based scale"
+        "Description": "North American Adult Reading Test score, scored similar to an IQ test on a 100-point-based scale"
     },
     "disease_duration": {
-	"Description": "How long since the patient was diagnosed",
-	"Units": "years"
+        "Description": "How long since the patient was diagnosed",
+        "Units": "years"
     },
     "rl_deficits": {
-	"Description": "Which side of the body has deficits and how great these deficits are"
+        "Description": "Which side of the body has deficits and how great these deficits are"
     },
     "notes": {
-	"Description": "Experimenter/curator notes on collection and curation"
+        "Description": "Experimenter/curator notes on collection and curation"
     }
 }
