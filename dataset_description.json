@@ -1,6 +1,6 @@
 {
   "Name": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
-  "BIDSVersion": "1.8.0",
+  "BIDSVersion": "1.11.1",
   "DatasetType": "raw",
   "Authors": [
     "Alexander P. Rockhill",
@@ -16,12 +16,5 @@
       "DOI": "doi:10.18112/openneuro.ds002778.v1.0.5"
     }
   ],
-  "Version": "1.0.2",
-  "GeneratedBy": [
-    {
-      "Name": "nemar-cli",
-      "Version": "0.8.8",
-      "CodeURL": "https://github.com/nemar-org/nemar-cli"
-    }
-  ]
+  "Version": "1.0.2"
 }

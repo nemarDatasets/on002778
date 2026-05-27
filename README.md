@@ -23,9 +23,9 @@ Phillips, C., Delorme, A., Oostenveld, R. (2019). EEG-BIDS, an extension to the 
 
 Note: see this discussion on the structure of the json files that is sufficient but not optimal and will hopefully be changed in future versions of BIDS: https://neurostars.org/t/behavior-metadata-without-tsv-event-data-related-to-a-neuroimaging-data/6768/25.
 
-## NEMAR curation changes (2026-05-21)
+## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 4 errors + 1290 warnings → 0 errors + 967 warnings. Raw `.bdf` binary payloads unchanged.
+BIDS validator: 4 errors + 1290 warnings → 0 errors + 968 warnings. Raw `.bdf` binary payloads unchanged.
 
 ### `participants.tsv`
 - `gender` column: `f`/`m` → `F`/`M` for all 31 rows. Why: the paired `participants.json` declares `gender` with `Levels: {"F": "female", "M": "male"}` (uppercase enum), so the lowercase TSV cells did not match and were flagged as the wrong type.
@@ -36,9 +36,9 @@ BIDS validator: 4 errors + 1290 warnings → 0 errors + 967 warnings. Raw `.bdf`
 - `MMSE` entry: removed the invalid `Levels` block. Why: the previous Levels keys were bin descriptors (`">24"`, `"19 - 23"`, `"10 - 18"`, `"<9"`), not literal cell values, so the validator interpreted them as an enum and rejected the actual integer cells (e.g. `30`) as not matching. Rewrote the entry as a numeric `Units: "points"` column and moved the bin information into the `Description` text. Closes the `MMSE` `TSV_VALUE_INCORRECT_TYPE` error.
 
 ### `dataset_description.json`
-- Added `DatasetType: "raw"`. Why: BIDS-validator otherwise infers a derivative-rules cascade when `DatasetType` is missing alongside `GeneratedBy`, producing spurious warnings.
-- Added `GeneratedBy: [{Name: "nemar-cli", Version: "0.8.8", CodeURL: "https://github.com/nemar-org/nemar-cli"}]`. Why: records the NEMAR rehost step in the dataset's provenance chain.
-- Bumped `BIDSVersion` `1.2.2` → `1.8.0`. Why: the previous value was below the validator's recognized-version floor.
+- Added `DatasetType: "raw"`. Why: without it, the validator treats the dataset under derivative-rules and emits spurious warnings.
+- `GeneratedBy` is left as the source published it (absent). The original OpenNeuro dataset declares no generation tooling, and the NEMAR rehost only fixes validator issues — not generation — so nothing is added here.
+- Bumped `BIDSVersion` `1.2.2` → `1.11.1`. Why: set to the BIDS version the validator checks against.
 
 ### `task-rest_eeg.json` (new, inheriting root sidecar)
 - Created at the dataset root with one key: `TaskDescription`, a one-sentence paraphrase of this README (resting-state EEG; healthy controls a single session, Parkinson's patients two sessions, one on and one off dopaminergic medication). Why: closes the 46 `SIDECAR_KEY_RECOMMENDED:TaskDescription` warnings on the `_eeg.bdf` recordings via BIDS inheritance, in one place.
