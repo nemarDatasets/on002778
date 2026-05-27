@@ -2,6 +2,8 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
+  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The study includes 31 participants with EEG data acquired using BioSemi systems, with Parkinson's patients recorded in both on- and off-medication states. The dataset is curated to BIDS standards and supports investigations of cortical oscillatory dynamics and neurophysiological markers associated with Parkinson's disease.",
+  "methods_description": "Resting-state EEG recordings were acquired using BioSemi systems. Parkinson's disease patients were recorded in two sessions: one on dopaminergic medication and one off medication. Healthy control participants completed a single session. UPDRS rating scales were collected by laboratory personnel who completed online training (not board-certified neurologists). Recordings were digitized and organized according to BIDS standards.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
@@ -13,6 +15,26 @@
       "orcid": "0000-0003-2463-5134"
     }
   },
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "Parkinson's disease"
+    },
+    {
+      "term": "resting-state"
+    },
+    {
+      "term": "cortical oscillations"
+    },
+    {
+      "term": "dopaminergic medication"
+    },
+    {
+      "term": "electroencephalography"
+    }
+  ],
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds002778.v1.0.5",
@@ -50,11 +72,11 @@
       "relation_type": "IsDescribedBy"
     }
   ],
+  "resource_type_specific": "Neuroimaging Dataset",
   "modalities": [
     "beh",
     "eeg"
   ],
-  "resource_type_specific": "Neuroimaging Dataset",
   "sizes": [
     "571.3 MB (47 files)"
   ],
@@ -66,29 +88,6 @@
     ".tsv",
     ".yml"
   ],
-  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The data were acquired to investigate neurophysiological markers of Parkinson's disease, including alterations in cortical oscillatory activity and synchronization patterns. This resource supports research into the electrophysiological characteristics of Parkinson's disease and dopaminergic effects on cortical dynamics.",
-  "methods_description": "Resting-state EEG data were collected from Parkinson's disease patients and healthy controls. Clinical assessments included UPDRS rating scales administered by laboratory personnel trained through online certification programs. Data were organized according to the Brain Imaging Data Structure (BIDS) standard for electroencephalography.",
-  "keywords": [
-    {
-      "term": "Parkinson's disease"
-    },
-    {
-      "term": "EEG"
-    },
-    {
-      "term": "resting-state"
-    },
-    {
-      "term": "cortical oscillations"
-    },
-    {
-      "term": "beta band activity"
-    },
-    {
-      "term": "Electroencephalography",
-      "subject_scheme": "MeSH",
-      "value_uri": "http://id.nlm.nih.gov/mesh/D004569"
-    }
-  ],
-  "source_hash": "cbdd704ff495c54126aad1738e5fcc63064f5e1544e1221059e9cb9b814e4762"
+  "resource_type_general": "Dataset",
+  "source_hash": "5440bebb45ceef4d9308c5a907b5d3156e15858fdc4eaef4768492950b6d63e2"
 }
