@@ -25,32 +25,32 @@ Note: see this discussion on the structure of the json files that is sufficient 
 
 ## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 4 errors + 1290 warnings → 0 errors + 968 warnings. Raw `.bdf` binary payloads unchanged.
+The BIDS validator went from 4 errors + 1290 warnings to 0 errors + 968 warnings. None of the raw `.bdf` recordings were touched — every change is to a text sidecar.
 
-### `participants.tsv`
-- `gender` column: `f`/`m` → `F`/`M` for all 31 rows. Why: the paired `participants.json` declares `gender` with `Levels: {"F": "female", "M": "male"}` (uppercase enum), so the lowercase TSV cells did not match and were flagged as the wrong type.
-- `hand` column: `r` → `R` for all 31 rows. Why: same reason — `participants.json` declares `hand.Levels` as uppercase `{"R","L","A"}`.
-- No other column values changed.
+**Participant table (`participants.tsv`)**
+- The `gender` column held lowercase `f`/`m`, but the paired `participants.json` defines this column with uppercase categories (`F` = female, `M` = male). The 31 cells were capitalized to match so they read as valid values.
+- The `hand` column held lowercase `r` for the same reason — `participants.json` defines handedness as uppercase `R`/`L`/`A` — so it was capitalized to `R` across all 31 rows.
+- No other column values were changed.
 
-### `participants.json`
-- `MMSE` entry: removed the invalid `Levels` block. Why: the previous Levels keys were bin descriptors (`">24"`, `"19 - 23"`, `"10 - 18"`, `"<9"`), not literal cell values, so the validator interpreted them as an enum and rejected the actual integer cells (e.g. `30`) as not matching. Rewrote the entry as a numeric `Units: "points"` column and moved the bin information into the `Description` text. Closes the `MMSE` `TSV_VALUE_INCORRECT_TYPE` error.
+**Participant descriptions (`participants.json`)**
+- The `MMSE` entry listed score bins (`">24"`, `"19 - 23"`, `"10 - 18"`, `"<9"`) as if they were the allowed cell values, which made the validator reject the actual integer scores (e.g. `30`). It was rewritten as a plain numeric column measured in points, and the bin information was moved into the column's description text where it belongs.
 
-### `dataset_description.json`
-- Added `DatasetType: "raw"`. Why: without it, the validator treats the dataset under derivative-rules and emits spurious warnings.
-- `GeneratedBy` is left as the source published it (absent). The original OpenNeuro dataset declares no generation tooling, and the NEMAR rehost only fixes validator issues — not generation — so nothing is added here.
-- Bumped `BIDSVersion` `1.2.2` → `1.11.1`. Why: set to the BIDS version the validator checks against.
+**Dataset description (`dataset_description.json`)**
+- Added `DatasetType: "raw"` so the dataset is validated as raw data rather than a derivative.
+- Updated `BIDSVersion` from `1.2.2` to `1.11.1`, the version the current validator checks against.
+- Left `GeneratedBy` absent, as the source published it. The original OpenNeuro dataset declares no generation tooling, and this rehost only fixes validator issues, so nothing was invented here.
 
-### `task-rest_eeg.json` (new, inheriting root sidecar)
-- Created at the dataset root with one key: `TaskDescription`, a one-sentence paraphrase of this README (resting-state EEG; healthy controls a single session, Parkinson's patients two sessions, one on and one off dopaminergic medication). Why: closes the 46 `SIDECAR_KEY_RECOMMENDED:TaskDescription` warnings on the `_eeg.bdf` recordings via BIDS inheritance, in one place.
+**Task sidecar added at the dataset root (`task-rest_eeg.json`)**
+- A new shared sidecar carrying a one-sentence task description paraphrased from this README (resting-state EEG; healthy controls have a single session, Parkinson's patients two — one on and one off dopaminergic medication). Placed at the root so it applies to every recording at once instead of being repeated in each file.
 
-### `task-rest_beh.json`
-- Added `TaskName: "rest"` and `TaskDescription` (resting state, no behavioral responses; the `_beh.tsv` files are placeholders kept only for BIDS-spec compatibility — this was already noted in the existing `trial` column description). Why: closes 92 `TaskName` and 46 `TaskDescription` warnings on the behavioral side via inheritance. The original `trial` column documentation is preserved unchanged.
+**Behavioral sidecar (`task-rest_beh.json`)**
+- Added a task name (`rest`) and a task description noting this is resting state with no behavioral responses; the `_beh.tsv` files are placeholders kept only for BIDS compatibility, as the existing `trial` column note already explains. That original column documentation is preserved unchanged.
 
-### `task-rest_events.json` (new, inheriting root sidecar)
-- Created at the dataset root, documenting four columns of every `_events.tsv`: `onset` (with `Units: "s"`), `duration` (with `Units: "s"`), `sample`, and `value`. Why: the per-recording `_events.tsv` files have `sample` and `value` columns that were not declared in any sidecar, which the validator flags as `TSV_ADDITIONAL_COLUMNS_UNDEFINED`. The `value` column carries the BioSemi `Status`-channel trigger code. One root sidecar closes 92 warnings via inheritance.
+**Events sidecar added at the dataset root (`task-rest_events.json`)**
+- A new shared sidecar describing the four columns in every events table: `onset` and `duration` (both in seconds), `sample`, and `value`. The `value` column carries the BioSemi `Status`-channel trigger code. These columns appeared in the data but were previously undocumented; one root sidecar documents them for all recordings.
 
-### `sub-*/ses-*/eeg/sub-*_ses-*_task-rest_eeg.json` (46 per-recording sidecars)
-- Renamed the key `MiscChannelCount` → `MISCChannelCount`. Why: the previous spelling is not BIDS-canonical (BIDS requires all-uppercase `MISC`), so the validator did not recognise the field and continued to warn that `MISCChannelCount` was missing. No value change — the field stays at `0`. Closes the 46 `SIDECAR_KEY_RECOMMENDED:MISCChannelCount` warnings.
+**Recording sidecars (`_eeg.json`, all 46 recordings)**
+- The misc-channel-count field was spelled `MiscChannelCount`; BIDS uses all-uppercase `MISCChannelCount`. It was renamed so the validator recognizes it. The value, `0`, was already correct and is unchanged.
 
-### `sub-*/ses-*/sub-*_ses-*_scans.tsv`
-- Left unchanged from the source. EEGDash's loader appends a `.000000` microsecond suffix to `acq_time` on read, but the source timestamps (e.g. `2011-01-19T11:22:56`, no fractional seconds) are already valid BIDS — fractional seconds are optional in the `date-time` type — so the suffix is an unnecessary loader-side normalization and is not baked into the published data.
+**Acquisition times (`scans.tsv`) — left exactly as published**
+- EEGDash's loader appends a `.000000` microsecond suffix to the acquisition times when it reads the files, but the published timestamps (e.g. `2011-01-19T11:22:56`) are already valid BIDS — fractional seconds are optional — so they were left unchanged rather than having the loader's suffix baked in.
