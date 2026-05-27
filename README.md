@@ -52,5 +52,5 @@ BIDS validator: 4 errors + 1290 warnings → 0 errors + 968 warnings. Raw `.bdf`
 ### `sub-*/ses-*/eeg/sub-*_ses-*_task-rest_eeg.json` (46 per-recording sidecars)
 - Renamed the key `MiscChannelCount` → `MISCChannelCount`. Why: the previous spelling is not BIDS-canonical (BIDS requires all-uppercase `MISC`), so the validator did not recognise the field and continued to warn that `MISCChannelCount` was missing. No value change — the field stays at `0`. Closes the 46 `SIDECAR_KEY_RECOMMENDED:MISCChannelCount` warnings.
 
-### `sub-*/ses-*/sub-*_ses-*_scans.tsv` (46 per-recording scan tables)
-- `acq_time` cells: appended `.000000` microsecond suffix to every value (e.g. `2011-01-19T11:22:56` → `2011-01-19T11:22:56.000000`), plus a trailing newline. Why: `mne-bids`'s downstream `strptime('%Y-%m-%dT%H:%M:%S.%f')` requires fractional-second precision; without the suffix, downstream loaders have to repair the column on every read. Baking the suffix in removes that load-time mutation. No effect on the validator's findings — this purely cleans the load path. Original timestamp values otherwise unchanged.
+### `sub-*/ses-*/sub-*_ses-*_scans.tsv`
+- Left unchanged from the source. EEGDash's loader appends a `.000000` microsecond suffix to `acq_time` on read, but the source timestamps (e.g. `2011-01-19T11:22:56`, no fractional seconds) are already valid BIDS — fractional seconds are optional in the `date-time` type — so the suffix is an unnecessary loader-side normalization and is not baked into the published data.
