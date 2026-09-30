@@ -2,8 +2,8 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "UC San Diego Resting State EEG Data from Patients with Parkinson's Disease",
-  "description": "This dataset comprises resting-state electroencephalography (EEG) recordings collected from patients with Parkinson's disease and healthy controls at the University of San Diego. The study includes 31 participants with EEG data acquired using BioSemi systems, with Parkinson's patients recorded in both on- and off-medication states. The dataset supports investigation of neurophysiological markers of Parkinson's disease, including cortical oscillations and synchronization patterns relevant to dopaminergic dysfunction.",
-  "methods_description": "Resting-state EEG recordings were acquired using BioSemi systems. Parkinson's disease patients were recorded in two sessions: one on dopaminergic medication and one off medication. Healthy control participants completed a single session. UPDRS rating scales were collected by laboratory personnel who completed online training (not board-certified neurologists).",
+  "description": "Resting-state EEG recorded at UC San Diego from patients with Parkinson's disease and healthy controls. Patients were recorded in two sessions, on and off dopaminergic medication, while controls completed a single session. The dataset includes participant demographics and UPDRS and MMSE clinical measures, and is curated in BIDS format for studying oscillatory and waveform characteristics of Parkinson's disease.",
+  "methods_description": "Resting-state EEG was recorded with a BioSemi system and stored as .bdf files. Healthy controls had one session and Parkinson's patients had two, one on and one off dopaminergic medication. UPDRS ratings were collected by trained laboratory personnel rather than a board-certified neurologist.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
@@ -20,22 +20,18 @@
       "term": "EEG"
     },
     {
-      "term": "Parkinson's disease"
+      "term": "Parkinson Disease",
+      "subject_scheme": "MeSH",
+      "value_uri": "http://id.nlm.nih.gov/mesh/D010300"
     },
     {
-      "term": "resting-state"
-    },
-    {
-      "term": "cortical oscillations"
-    },
-    {
-      "term": "beta band activity"
+      "term": "resting state"
     },
     {
       "term": "dopaminergic medication"
     },
     {
-      "term": "electroencephalography"
+      "term": "beta oscillations"
     }
   ],
   "related_identifiers": [
@@ -50,28 +46,28 @@
       "relation_type": "IsDescribedBy"
     },
     {
-      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on002778",
-      "identifier_type": "URL",
-      "relation_type": "IsDescribedBy"
-    },
-    {
       "identifier": "10.1523/ENEURO.0151-19.2019",
       "identifier_type": "DOI",
-      "relation_type": "IsDescribedBy"
+      "relation_type": "References"
     },
     {
       "identifier": "10.1002/ana.24507",
       "identifier_type": "DOI",
-      "relation_type": "IsDescribedBy"
+      "relation_type": "References"
     },
     {
       "identifier": "10.1016/j.nicl.2013.07.013",
       "identifier_type": "DOI",
-      "relation_type": "IsDescribedBy"
+      "relation_type": "References"
     },
     {
       "identifier": "10.1038/s41597-019-0104-8",
       "identifier_type": "DOI",
+      "relation_type": "References"
+    },
+    {
+      "identifier": "https://nemar.org/dataset/on002778",
+      "identifier_type": "URL",
       "relation_type": "IsDescribedBy"
     }
   ],
@@ -82,7 +78,7 @@
     "eeg"
   ],
   "sizes": [
-    "571.3 MB (47 files)"
+    "545 MB (47 files)"
   ],
   "formats": [
     ".bdf",
